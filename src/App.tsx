@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [sign, setSign] = useState(null);
+  const [sign, setSign] = useState("");
   let name = "";
   return (
     <div className="App">
