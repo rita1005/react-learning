@@ -8,7 +8,7 @@ function App() {
 function Homework() {
   const [sign, setSign] = useState("");
   let name = "";
-  const [signs, setSigns] = useState([]);
+  const [signs, setSigns] = useState<string[]>([]);
   return (
     <div className="App">
       <input
@@ -28,7 +28,7 @@ function Homework() {
       <div>{sign}您好</div>
       <ul>
         {signs.map((sign) => (
-          <li>{sign}</li>
+          <li key={sign}>{sign}</li>
         ))}
       </ul>
     </div>
