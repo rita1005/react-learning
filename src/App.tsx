@@ -6,14 +6,14 @@ function App() {
 }
 
 function Homework() {
-  const [sign, setSign] = useState("");
-  let name = "";
+  const [sign, setSign] = useState<string>();
+  const [name, setName] = useState<string>("");
   const [signs, setSigns] = useState<string[]>([]);
   return (
     <div className="App">
       <input
         onChange={(e) => {
-          name = e.target.value;
+          setName(e.target.value);
         }}
       />
       <button
@@ -26,6 +26,7 @@ function Homework() {
         click
       </button>
       <div>{sign}您好</div>
+      <div>{name}</div>
       <ul>
         {signs.map((sign) => (
           <li key={sign}>{sign}</li>
