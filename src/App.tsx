@@ -50,6 +50,7 @@ function TodoList() {
   const [todoList, setTodoList] = useState<{ note: string; isDone: boolean }[]>(
     [],
   );
+  const [status, setStatus] = useState<string>();
   const handleButtonClick = () => {
     setTodo("");
   };
@@ -84,18 +85,57 @@ function TodoList() {
       >
         add
       </button>
+      <br />
+      <form>
+        <label>
+          <input
+            type="radio"
+            name="choice"
+            value="done"
+            onChange={(e) => {
+              setStatus(e.target.value);
+            }}
+          />{" "}
+          已完成
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="choice"
+            value="undo"
+            onChange={(e) => setStatus(e.target.value)}
+          />{" "}
+          未完成
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="choice"
+            value="all"
+            onChange={(e) => setStatus(e.target.value)}
+          />{" "}
+          全部
+        </label>
+      </form>
       <ul style={{ listStyle: "none" }}>
         {todoList.map((t, index) => (
           <li
-            key={index}
+            key={t.note}
             style={{
               textAlign: "left",
               textDecoration: t.isDone ? "line-through" : "none",
+              display:
+                (status === "done" && !t.isDone) ||
+                (status === "undo" && t.isDone)
+                  ? "none"
+                  : "block",
             }}
           >
             <input
               type="checkbox"
+              checked={t.isDone}
               onChange={() => {
+                console.log(index);
                 handleCheckBoxChange(index);
               }}
             />
