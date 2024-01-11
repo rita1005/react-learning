@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import TodoItem from "./components/TodoItem";
 
 function App() {
   return (
@@ -119,35 +120,43 @@ function TodoList() {
       </form>
       <ul style={{ listStyle: "none" }}>
         {todoList.map((t, index) => (
-          <li
+          <TodoItem
             key={t.note}
-            style={{
-              textAlign: "left",
-              textDecoration: t.isDone ? "line-through" : "none",
-              display:
-                (status === "done" && !t.isDone) ||
-                (status === "undo" && t.isDone)
-                  ? "none"
-                  : "block",
-            }}
-          >
-            <input
-              type="checkbox"
-              checked={t.isDone}
-              onChange={() => {
-                console.log(index);
-                handleCheckBoxChange(index);
-              }}
-            />
-            {t.note}
-            <button
-              onClick={() => {
-                handleDeleteButton(index);
-              }}
-            >
-              delete
-            </button>
-          </li>
+            todoItem={t}
+            index={index}
+            status={status}
+            handleCheckBoxChange={handleCheckBoxChange}
+            handleDeleteButton={handleDeleteButton}
+          />
+          // <li
+          //   key={t.note}
+          //   style={{
+          //     textAlign: "left",
+          //     textDecoration: t.isDone ? "line-through" : "none",
+          //     display:
+          //       (status === "done" && !t.isDone) ||
+          //       (status === "undo" && t.isDone)
+          //         ? "none"
+          //         : "block",
+          //   }}
+          // >
+          //   <input
+          //     type="checkbox"
+          //     checked={t.isDone}
+          //     onChange={() => {
+          //       console.log(index);
+          //       handleCheckBoxChange(index);
+          //     }}
+          //   />
+          //   {t.note}
+          //   <button
+          //     onClick={() => {
+          //       handleDeleteButton(index);
+          //     }}
+          //   >
+          //     delete
+          //   </button>
+          // </li>
         ))}
       </ul>
     </>
