@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "./App.css";
 import TodoItem from "./components/TodoItem";
 
@@ -47,13 +47,19 @@ function Sign() {
 }
 
 function TodoList() {
-  const [todo, setTodo] = useState<string>("");
+  const todoRef = useRef<HTMLInputElement>(null);
   const [todoList, setTodoList] = useState<{ note: string; isDone: boolean }[]>(
     [],
   );
   const [status, setStatus] = useState<string>();
   const handleButtonClick = () => {
-    setTodo("");
+    if (todoRef.current!) {
+      setTodoList([
+        ...todoList,
+        { note: todoRef.current.value!, isDone: false },
+      ]);
+      todoRef.current.value = "";
+    }
   };
 
   const handleCheckBoxChange = (index: number) => {
@@ -71,21 +77,14 @@ function TodoList() {
     <>
       <h3>Todo List</h3>
       <input
-        value={todo}
+        ref={todoRef}
         onChange={(e) => {
-          setTodo(e.target.value.trim());
+          if (todoRef.current) {
+            todoRef.current.value = e.target.value.trim();
+          }
         }}
       />
-      <button
-        onClick={() => {
-          if (todo!) {
-            setTodoList([...todoList, { note: todo!, isDone: false }]);
-          }
-          handleButtonClick();
-        }}
-      >
-        add
-      </button>
+      <button onClick={handleButtonClick}>add</button>
       <br />
       <form>
         <label>
@@ -128,35 +127,6 @@ function TodoList() {
             handleCheckBoxChange={handleCheckBoxChange}
             handleDeleteButton={handleDeleteButton}
           />
-          // <li
-          //   key={t.note}
-          //   style={{
-          //     textAlign: "left",
-          //     textDecoration: t.isDone ? "line-through" : "none",
-          //     display:
-          //       (status === "done" && !t.isDone) ||
-          //       (status === "undo" && t.isDone)
-          //         ? "none"
-          //         : "block",
-          //   }}
-          // >
-          //   <input
-          //     type="checkbox"
-          //     checked={t.isDone}
-          //     onChange={() => {
-          //       console.log(index);
-          //       handleCheckBoxChange(index);
-          //     }}
-          //   />
-          //   {t.note}
-          //   <button
-          //     onClick={() => {
-          //       handleDeleteButton(index);
-          //     }}
-          //   >
-          //     delete
-          //   </button>
-          // </li>
         ))}
       </ul>
     </>
