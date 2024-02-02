@@ -1,4 +1,5 @@
-export default function TodoItem({
+import { memo } from "react";
+const TodoItem = memo(function TodoItem({
   todoItem,
   index,
   status,
@@ -11,7 +12,7 @@ export default function TodoItem({
   handleCheckBoxChange: (index: number) => void;
   handleDeleteButton: (index: number) => void;
 }) {
-  console.log("hi");
+  console.log("hi" + todoItem.note);
   return (
     <>
       <li
@@ -45,4 +46,15 @@ export default function TodoItem({
       </li>
     </>
   );
+}, arePropsEqual);
+
+function arePropsEqual(
+  oldProps: { todoItem: { note: string; isDone: boolean } },
+  newProps: { todoItem: { note: string; isDone: boolean } },
+) {
+  return (
+    oldProps.todoItem.note === newProps.todoItem.note &&
+    oldProps.todoItem.isDone === newProps.todoItem.isDone
+  );
 }
+export default TodoItem;
